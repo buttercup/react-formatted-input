@@ -1,0 +1,36 @@
+{
+  "name": "react-formatted-input",
+  "version": "0.1.0",
+  "description": "An input component that abides by configurable formatting and constraint rules",
+  "main": "source/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/buttercup/react-formatted-input.git"
+  },
+  "keywords": [
+    "buttercup",
+    "react",
+    "input",
+    "format",
+    "constraint",
+    "data"
+  ],
+  "author": "Perry Mitchell <perry@perrymitchell.net>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/buttercup/react-formatted-input/issues"
+  },
+  "homepage": "https://github.com/buttercup/react-formatted-input#readme",
+  "peerDependencies": {
+    "react": ">= 15.0.0"
+  },
+  "devDependencies": {
+    "react": "^15.5.4"
+  },
+  "dependencies": {
+    "prop-types": "^15.5.10"
+  }
+}
