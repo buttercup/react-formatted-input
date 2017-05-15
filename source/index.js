@@ -1,14 +1,15 @@
 import { Component } from "react";
 import PropTypes from "prop-types";
 
-import { filterValue } from "./filter.js";
+import { filterValue, formatValue } from "./filter.js";
 
 export default class FormattedInput extends Component {
 
     constructor(props, ...rest) {
         super(props, ...rest);
         this.state = {
-            value: ""
+            value: "",
+            raw: ""
         };
     }
 
@@ -18,7 +19,8 @@ export default class FormattedInput extends Component {
             maxLength: this.props.maxLength
         });
         this.setState({
-            value: newValue
+            raw: newValue,
+            value: formatValue(newValue)
         });
     }
 

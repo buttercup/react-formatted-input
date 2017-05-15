@@ -5,3 +5,8 @@ export function filterValue(value, { maxLength }) {
     }
     return filteredValue;
 }
+
+export function formatValue(value) {
+    let formattedValue = value;
+    return formattedValue;
+}
