@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 
 import { filterValue, formatValue } from "./filter.js";
 
+const NOOP = () => {};
+
 export default class FormattedInput extends Component {
 
     constructor(props, ...rest) {
@@ -15,9 +17,14 @@ export default class FormattedInput extends Component {
     onValueChange(event) {
         const input = event.target;
         this.handleNewInput(input.value);
-        this.setState({
-            value: this.processValue(inputText)
-        });
+        this.setState(
+            {
+                value: this.processValue(inputText)
+            },
+            () => {
+                this.props.onValueChange(this.state.value);
+            }
+        );
     }
 
     processValue(value, props = this.props) {
@@ -42,6 +49,7 @@ export default class FormattedInput extends Component {
 FormattedInput.propTypes = {
     format: PropTypes.arrayOf(PropTypes.object),
     maxLength: PropTypes.number,
+    onValueChange: PropTypes.func,
     placeholder: PropTypes.string,
     value: PropTypes.string
 };
@@ -49,6 +57,7 @@ FormattedInput.propTypes = {
 FormattedInput.defaultProps = {
     format: [],
     maxLength: Infinity,
+    onValueChange: NOOP,
     placeholder: "",
     value: ""
 };
