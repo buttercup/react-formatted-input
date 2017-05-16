@@ -1,4 +1,4 @@
-import { Component } from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 import { filterValue, formatValue } from "./filter.js";
@@ -8,8 +8,12 @@ export default class FormattedInput extends Component {
     constructor(props, ...rest) {
         super(props, ...rest);
         this.state = {
-            value: this.props.value
+            value: props.value
         };
+    }
+
+    get value() {
+        return this.state.value;
     }
 
     onValueChange(event) {
