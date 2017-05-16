@@ -24,7 +24,7 @@ export default class FormattedInput extends Component {
         const newValue = filterValue(value, {
             maxLength: this.props.maxLength
         });
-        return formatValue(newValue);
+        return formatValue(newValue, props.format);
     }
 
     render() {
@@ -40,12 +40,14 @@ export default class FormattedInput extends Component {
 }
 
 FormattedInput.propTypes = {
+    format: PropTypes.arrayOf(PropTypes.object),
     maxLength: PropTypes.number,
     placeholder: PropTypes.string,
     value: PropTypes.string
 };
 
 FormattedInput.defaultProps = {
+    format: [],
     maxLength: Infinity,
     placeholder: "",
     value: ""

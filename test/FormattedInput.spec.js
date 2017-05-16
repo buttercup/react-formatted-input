@@ -22,3 +22,19 @@ test("prevents values being longer than maxLength", function() {
     const inputEl = input.props.children;
     expect(inputEl.props.value).toEqual("too l");
 });
+
+test("it forces values to adhere to a pattern", function() {
+    const pattern = [
+        { match: /^[0-9]{2}/ },
+        { exactly: "/" },
+        { match: /^[12][0-9]{3}/ }
+    ];
+    const input = convertToObject(
+        <FormattedInput
+            format={pattern}
+            value="bad19/2005extra"
+            />
+    );
+    const inputEl = input.props.children;
+    expect(inputEl.props.value).toEqual("19/2005");
+});
