@@ -8,8 +8,7 @@ export default class FormattedInput extends Component {
     constructor(props, ...rest) {
         super(props, ...rest);
         this.state = {
-            value: "",
-            raw: ""
+            value: this.props.value
         };
     }
 
@@ -19,7 +18,6 @@ export default class FormattedInput extends Component {
             maxLength: this.props.maxLength
         });
         this.setState({
-            raw: newValue,
             value: formatValue(newValue)
         });
     }
@@ -38,10 +36,12 @@ export default class FormattedInput extends Component {
 
 FormattedInput.propTypes = {
     maxLength: PropTypes.number,
-    placeholder: PropTypes.string
+    placeholder: PropTypes.string,
+    value: PropTypes.string
 };
 
 FormattedInput.defaultProps = {
     maxLength: Infinity,
-    placeholder: ""
+    placeholder: "",
+    value: ""
 };
