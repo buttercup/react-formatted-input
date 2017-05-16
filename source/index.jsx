@@ -15,10 +15,9 @@ export default class FormattedInput extends Component {
     }
 
     onValueChange(event) {
-        const input = event.target;
-        this.handleNewInput(input.value);
+        const inputValue = event.target.value;
         this.setState(
-            { value: this.processValue(inputText) },
+            { value: this.processValue(inputValue) },
             () => this.props.onValueChange(this.state.value)
         );
     }

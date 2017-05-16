@@ -31,12 +31,23 @@
     "babel-jest": "^20.0.1",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
+    "enzyme": "^2.8.2",
     "jest": "^20.0.1",
+    "jest-enzyme": "^3.1.1",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
-    "react-json-renderer": "0.0.2"
+    "react-json-renderer": "0.0.2",
+    "sinon": "^2.2.0"
   },
   "dependencies": {
     "prop-types": "^15.5.10"
+  },
+  "jest": {
+    "setupTestFrameworkScriptFile": "./node_modules/jest-enzyme/lib/index.js",
+    "unmockedModulePathPatterns": [
+      "react",
+      "enzyme",
+      "jest-enzyme"
+    ]
   }
 }

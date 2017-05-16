@@ -1,6 +1,9 @@
 import React from "react";
-import FormattedInput from "../source/index.jsx";
 import { convertToObject } from "react-json-renderer";
+import { shallow } from "enzyme";
+import { spy } from "sinon";
+
+import FormattedInput from "../source/index.jsx";
 
 test("accepts a value upon initialisation", function() {
     const input = convertToObject(
@@ -57,4 +60,25 @@ test("automatically enters delimiters", function() {
     );
     const inputEl = input.props.children;
     expect(inputEl.props.value).toEqual("3204-6512-9001-0002");
+});
+
+test("fires callback when value changes", function() {
+    const pattern = [
+        { match: /^[0-9]{1}/ },
+        { exactly: ":" },
+        { match: /^[a-z]{1}/i }
+    ];
+    return new Promise(function(resolve) {
+        const callback = function(value) {
+            expect(value).toEqual("3:a");
+            resolve();
+        };
+        const wrapper = shallow(
+            <FormattedInput
+                format={pattern}
+                onValueChange={callback}
+                />
+        );
+        wrapper.simulate("change", { target: { value: "3a" } });
+    });
 });
