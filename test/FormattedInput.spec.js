@@ -11,3 +11,14 @@ test("accepts a value upon initialisation", function() {
     const inputEl = input.props.children;
     expect(inputEl.props.value).toEqual("test value");
 });
+
+test("prevents values being longer than maxLength", function() {
+    const input = convertToObject(
+        <FormattedInput
+            maxLength={5}
+            value="too long"
+            />
+    )
+    const inputEl = input.props.children;
+    expect(inputEl.props.value).toEqual("too l");
+});

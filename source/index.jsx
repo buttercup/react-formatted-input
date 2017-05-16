@@ -8,22 +8,23 @@ export default class FormattedInput extends Component {
     constructor(props, ...rest) {
         super(props, ...rest);
         this.state = {
-            value: props.value
+            value: this.processValue(props.value, props)
         };
-    }
-
-    get value() {
-        return this.state.value;
     }
 
     onValueChange(event) {
         const input = event.target;
-        const newValue = filterValue(input.value, {
+        this.handleNewInput(input.value);
+        this.setState({
+            value: this.processValue(inputText)
+        });
+    }
+
+    processValue(value, props = this.props) {
+        const newValue = filterValue(value, {
             maxLength: this.props.maxLength
         });
-        this.setState({
-            value: formatValue(newValue)
-        });
+        return formatValue(newValue);
     }
 
     render() {
