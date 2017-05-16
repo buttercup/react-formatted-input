@@ -29,11 +29,8 @@ export function formatValue(value, formatSpec = []) {
                     formattedValue += matchedText;
                 }
             } else if (typeof format.exactly === "string") {
-                while (currentValue.length > 0 && currentValue.indexOf(format.exactly) < 0) {
-                    currentValue = currentValue.substr(1);
-                }
                 formattedValue += format.exactly;
-                if (currentValue.length > 0) {
+                if (currentValue.indexOf(format.exactly) === 0) {
                     currentValue = currentValue.substr(format.exactly.length);
                 }
             } else {

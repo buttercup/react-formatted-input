@@ -38,3 +38,23 @@ test("it forces values to adhere to a pattern", function() {
     const inputEl = input.props.children;
     expect(inputEl.props.value).toEqual("19/2005");
 });
+
+test("automatically enters delimiters", function() {
+    const pattern = [
+        { match: /^[0-9]{4}/ },
+        { exactly: "-" },
+        { match: /^[0-9]{4}/ },
+        { exactly: "-" },
+        { match: /^[0-9]{4}/ },
+        { exactly: "-" },
+        { match: /^[0-9]{4}/ }
+    ];
+    const input = convertToObject(
+        <FormattedInput
+            format={pattern}
+            value="3204651290010002"
+            />
+    );
+    const inputEl = input.props.children;
+    expect(inputEl.props.value).toEqual("3204-6512-9001-0002");
+});
