@@ -49,6 +49,37 @@ export default class MyForm extends Component {
 }
 ```
 
+### Presets
+Some presets are available in the `source/presets.js` file that might be used like so:
+
+```jsx
+import FormattedInput, { Presets } from "@buttercup/react-formatted-input";
+import React, { Component } from "react";
+
+export default class MyForm extends Component {
+
+    render() {
+        return (
+            <form>
+                <FormattedInput
+                    format={Presets.CreditCard}
+                    value={this.state.creditCardNo}
+                    />
+                <FormattedInput
+                    format={Presets.CreditCardDate}
+                    value={this.state.creditCardValidFrom}
+                    />
+                <FormattedInput
+                    format={Presets.CreditCardDate}
+                    value={this.state.creditCardExpiry}
+                    />
+            </form>
+        );
+    }
+
+}
+```
+
 ## API
 The `FormattedInput` component can be used without any props, of course, but you might want some of these for it to be useful:
 
