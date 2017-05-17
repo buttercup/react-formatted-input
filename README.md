@@ -1,7 +1,7 @@
 # react-formatted-input
 An input component that abides by configurable formatting and constraint rules
 
-[![Build Status](https://travis-ci.org/buttercup/react-formatted-input.svg?branch=master)](https://travis-ci.org/buttercup/react-formatted-input)
+[![Build Status](https://travis-ci.org/buttercup/react-formatted-input.svg?branch=master)](https://travis-ci.org/buttercup/react-formatted-input) [![npm package](https://img.shields.io/badge/%40buttercup%2Freact--formatted--input-npm-red.svg)](https://www.npmjs.com/package/@buttercup/react-formatted-input)
 
 ## About
 `FormattedInput` takes a value and ensures that user input conforms to some specified rules. Formatted input instances can have their length limited, as well as having a _pattern_ enforced for their entry. As the user types, changes to the value are forced through the provided pattern and any sections that are invalid are simply stripped. What is returned from the component is a pattern-matched string.
