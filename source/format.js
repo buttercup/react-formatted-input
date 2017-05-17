@@ -1,3 +1,9 @@
+/**
+ * Format a value for a pattern
+ * @param {String} value The value to format
+ * @param {Array.<Object>=} formatSpec The formatting specification to apply to the value
+ * @returns {String} The formatted value
+ */
 export function formatValue(value, formatSpec = []) {
     const formats = [...formatSpec];
     if (formats.length > 0) {
@@ -34,6 +40,10 @@ export function formatValue(value, formatSpec = []) {
     return value;
 }
 
+/**
+ * Check if a regular expression is anchored to the start of the string
+ * Checks to see if the first character in the expression is the start-anchor carat ^
+ */
 function isAnchoredToStart(regex) {
     const rexpStr = regex.toString();
     return /^\/\^/.test(rexpStr);

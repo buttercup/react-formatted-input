@@ -8,11 +8,16 @@ const NOOP = () => {};
 
 export const Presets = PatternPresets;
 
+/**
+ * Formatted Input component
+ * @augments Component
+ */
 export default class FormattedInput extends Component {
 
     constructor(props, ...rest) {
         super(props, ...rest);
         this.state = {
+            // format the provided value immediately
             value: formatValue(props.value, props.format)
         };
     }
@@ -24,6 +29,10 @@ export default class FormattedInput extends Component {
         }
     }
 
+    /**
+     * Fetch optional pass-through props for the underlying input
+     * @returns {Object} A props object to be spread onto the input
+     */
     getOptionalProps() {
         return ["name", "placeholder", "className"].reduce((props, propName) => {
             if (this.props[propName].length > 0) {
@@ -36,6 +45,10 @@ export default class FormattedInput extends Component {
         }, {});
     }
 
+    /**
+     * Handle value changes
+     * @param {Object} event An input change event
+     */
     onValueChange(event) {
         const inputValue = event.target.value;
         this.setState({
