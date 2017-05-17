@@ -11,7 +11,7 @@ export function formatValue(value, formatSpec = []) {
     if (formats.length > 0) {
         let formattedValue = "",
             currentValue = value;
-        while (formats.length > 0) {
+        while (formats.length > 0 && currentValue.length > 0) {
             const format = formats.shift();
             if (typeof format.match === "object") {
                 if (isAnchoredToStart(format.match) !== true) {

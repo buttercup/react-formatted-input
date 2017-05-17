@@ -46,7 +46,12 @@ export default class FormattedInput extends Component {
     }
 
     shouldComponentUpdate(nextProps, nextState) {
+        console.log("SHOULD UPDATE TO STATE?",
+            JSON.stringify(this.state),
+            JSON.stringify(nextState)
+        );
         if (this.state.value === nextState.value) {
+            console.log("NO");
             // no value change, cancel
             return false;
         }

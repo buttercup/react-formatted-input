@@ -82,3 +82,40 @@ test("fires callback when value changes", function() {
         wrapper.simulate("change", { target: { value: "3a" } });
     });
 });
+
+test("leaves the value empty if provided as such", function() {
+    const pattern = [
+        { match: /^[0-9]{1}/ },
+        { exactly: ":" },
+        { match: /^[a-z]{1}/i }
+    ];
+    const input = convertToObject(
+        <FormattedInput
+            value=""
+            />
+    );
+    const inputEl = input.props.children;
+    expect(inputEl.props.value).toEqual("");
+});
+
+test("updates to empty correctly", function() {
+    const pattern = [
+        { match: /^[0-9]{1}/ },
+        { exactly: ":" },
+        { match: /^[a-z]{1}/i }
+    ];
+    return new Promise(function(resolve) {
+        const callback = function(value) {
+            expect(value).toEqual("");
+            resolve();
+        };
+        const wrapper = shallow(
+            <FormattedInput
+                format={pattern}
+                value="3a"
+                onValueChange={callback}
+                />
+        );
+        wrapper.simulate("change", { target: { value: "" } });
+    });
+});
