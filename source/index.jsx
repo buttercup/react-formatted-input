@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-import { formatValue } from "./filter.js";
+import { formatValue } from "./format.js";
 
 const NOOP = () => {};
 
