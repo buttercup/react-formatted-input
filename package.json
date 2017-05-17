@@ -37,6 +37,7 @@
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-json-renderer": "0.0.2",
+    "react-test-renderer": "^15.5.4",
     "sinon": "^2.2.0"
   },
   "dependencies": {
