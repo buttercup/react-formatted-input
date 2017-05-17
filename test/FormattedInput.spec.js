@@ -15,6 +15,20 @@ test("accepts a value upon initialisation", function() {
     expect(inputEl.props.value).toEqual("test value");
 });
 
+test("supports optional <input> props", function() {
+    const input = convertToObject(
+        <FormattedInput
+            name="myInput"
+            placeholder="Your text here"
+            className="class1 class2"
+            />
+    );
+    const inputEl = input.props.children;
+    expect(inputEl.props.name).toEqual("myInput");
+    expect(inputEl.props.placeholder).toEqual("Your text here");
+    expect(inputEl.props.className).toEqual("class1 class2");
+});
+
 test("prevents values being longer than maxLength", function() {
     const input = convertToObject(
         <FormattedInput
