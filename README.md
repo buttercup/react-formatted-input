@@ -48,3 +48,45 @@ export default class MyForm extends Component {
 
 }
 ```
+
+## API
+The `FormattedInput` component can be used without any props, of course, but you might want some of these for it to be useful:
+
+### value _: String_
+The initialisation value for the formatted input. This value is still run through the formatting process, so it is possible that the applied value is different to the one provided.
+
+### format _: Array_
+The format is a collection of patterns and delimiters that control what values can be entered. By default there is no format (so any input is allowed), but it can be set to an array of objects that are used to process the value upon every change:
+
+ * **Match** groups: A match is a regular expression, anchored to the start of the string, that validates a group of characters. For example, `{ match: /^\d{3}/ }` will permit exactly 3 digits to be entered.
+ * **Exact** groups: An exact group represents a string or character that must come next in the value. It can be used to specify mandatory delimiters in the value. For instance, `{ exactly: "." }` will enforce that a period appears next in the value.
+
+When used in combination together, complex values like credit-card numbers can be easily represented:
+
+```javascript
+[
+    { match: /^\d{4}/ },
+    { exactly: "-" },
+    { match: /^\d{4}/ },
+    { exactly: "-" },
+    { match: /^\d{4}/ },
+    { exactly: "-" },
+    { match: /^\d{4}/ }
+]
+```
+
+Or even the expiry date of such a credit card:
+
+```javascript
+[
+    { match: /^[01][0-9]/ }, // month, 2 digits
+    { exactly: "/" },
+    { match: /^2[0-9]{3}/ } // year, 4 digits
+]
+```
+
+### onChange _: Function_
+A callback function for when the value changes. The only received parameter is the new value. The function is only called if the value differs from the last one.
+
+### name, placeholder, className
+Formatted input instances pass through these props to the underlying `<input>` element.
