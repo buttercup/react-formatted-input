@@ -76,7 +76,7 @@ test("fires callback when value changes", function() {
         const wrapper = shallow(
             <FormattedInput
                 format={pattern}
-                onValueChange={callback}
+                onChange={callback}
                 />
         );
         wrapper.simulate("change", { target: { value: "3a" } });
@@ -114,7 +114,7 @@ test("updates to empty correctly", function() {
             <FormattedInput
                 format={pattern}
                 value="3a"
-                onValueChange={callback}
+                onChange={callback}
                 />
         );
         wrapper.simulate("change", { target: { value: "" } });

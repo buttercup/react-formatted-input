@@ -17,7 +17,7 @@ export default class FormattedInput extends Component {
     componentDidUpdate(prevProps, prevState) {
         if (prevState.value !== this.state.value) {
             // only fire callback if the value changes
-            this.props.onValueChange(this.state.value)
+            this.props.onChange(this.state.value)
         }
     }
 
@@ -36,11 +36,19 @@ export default class FormattedInput extends Component {
     }
 
     render() {
+        const optionalProps = {};
+        if (this.props.name.length > 0) {
+            optionalProps.name = this.props.name;
+        }
+        if (this.props.placeholder.length > 0) {
+            optionalProps.placeholder = this.props.placeholder;
+        }
         return (
             <input
+                type="text"
+                {...optionalProps}
                 value={this.state.value}
                 onChange={e => this.onValueChange(e)}
-                placeholder={this.props.placeholder}
                 />
         );
     }
@@ -58,7 +66,8 @@ export default class FormattedInput extends Component {
 FormattedInput.propTypes = {
     format: PropTypes.arrayOf(PropTypes.object),
     maxLength: PropTypes.number,
-    onValueChange: PropTypes.func,
+    name: PropTypes.string,
+    onChange: PropTypes.func,
     placeholder: PropTypes.string,
     value: PropTypes.string
 };
@@ -66,7 +75,8 @@ FormattedInput.propTypes = {
 FormattedInput.defaultProps = {
     format: [],
     maxLength: Infinity,
-    onValueChange: NOOP,
+    name: "",
+    onChange: NOOP,
     placeholder: "",
     value: ""
 };
