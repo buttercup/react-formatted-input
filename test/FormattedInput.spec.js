@@ -91,6 +91,7 @@ test("leaves the value empty if provided as such", function() {
     ];
     const input = convertToObject(
         <FormattedInput
+            format={pattern}
             value=""
             />
     );
@@ -118,4 +119,22 @@ test("updates to empty correctly", function() {
         );
         wrapper.simulate("change", { target: { value: "" } });
     });
+});
+
+test("leaves out the last delimiter if the string is short", function() {
+    const pattern = [
+        { match: /^[0-9]{1}/ },
+        { exactly: ":" },
+        { match: /^[a-z]{1}/i },
+        { exactly: ":" },
+        { match: /^[a-z]{1}/i }
+    ];
+    const input = convertToObject(
+        <FormattedInput
+            format={pattern}
+            value="5c"
+            />
+    );
+    const inputEl = input.props.children;
+    expect(inputEl.props.value).toEqual("5:c");
 });
