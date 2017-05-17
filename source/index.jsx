@@ -21,6 +21,18 @@ export default class FormattedInput extends Component {
         }
     }
 
+    getOptionalProps() {
+        return ["name", "placeholder", "className"].reduce((props, propName) => {
+            if (this.props[propName].length > 0) {
+                return {
+                    ...props,
+                    [propName]: this.props[propName]
+                };
+            }
+            return props;
+        }, {});
+    }
+
     onValueChange(event) {
         const inputValue = event.target.value;
         this.setState({
@@ -36,17 +48,10 @@ export default class FormattedInput extends Component {
     }
 
     render() {
-        const optionalProps = {};
-        if (this.props.name.length > 0) {
-            optionalProps.name = this.props.name;
-        }
-        if (this.props.placeholder.length > 0) {
-            optionalProps.placeholder = this.props.placeholder;
-        }
         return (
             <input
                 type="text"
-                {...optionalProps}
+                {...this.getOptionalProps()}
                 value={this.state.value}
                 onChange={e => this.onValueChange(e)}
                 />
@@ -64,6 +69,7 @@ export default class FormattedInput extends Component {
 }
 
 FormattedInput.propTypes = {
+    className: PropTypes.string,
     format: PropTypes.arrayOf(PropTypes.object),
     maxLength: PropTypes.number,
     name: PropTypes.string,
@@ -73,6 +79,7 @@ FormattedInput.propTypes = {
 };
 
 FormattedInput.defaultProps = {
+    className: "",
     format: [],
     maxLength: Infinity,
     name: "",
