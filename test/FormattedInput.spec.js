@@ -45,6 +45,20 @@ test("it forces values to adhere to a pattern", function() {
     expect(inputEl.props.value).toEqual("19/2005");
 });
 
+test("enforces maximum length through the use of a pattern", function() {
+    const pattern = [
+        { match: /^.{6}/ }
+    ];
+    const input = convertToObject(
+        <FormattedInput
+            format={pattern}
+            value="123456789"
+            />
+    );
+    const inputEl = input.props.children;
+    expect(inputEl.props.value).toEqual("123456");
+});
+
 test("automatically enters delimiters", function() {
     const pattern = [
         { match: /^[0-9]{4}/ },
