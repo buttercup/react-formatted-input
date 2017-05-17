@@ -2,8 +2,11 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 
 import { formatValue } from "./format.js";
+import * as PatternPresets from "./presets.js";
 
 const NOOP = () => {};
+
+export const Presets = PatternPresets;
 
 export default class FormattedInput extends Component {
 
