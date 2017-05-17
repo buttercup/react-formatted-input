@@ -29,17 +29,6 @@ test("supports optional <input> props", function() {
     expect(inputEl.props.className).toEqual("class1 class2");
 });
 
-test("prevents values being longer than maxLength", function() {
-    const input = convertToObject(
-        <FormattedInput
-            maxLength={5}
-            value="too long"
-            />
-    )
-    const inputEl = input.props.children;
-    expect(inputEl.props.value).toEqual("too l");
-});
-
 test("it forces values to adhere to a pattern", function() {
     const pattern = [
         { match: /^[0-9]{2}/ },

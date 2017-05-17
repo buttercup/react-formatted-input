@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-import { filterValue, formatValue } from "./filter.js";
+import { formatValue } from "./filter.js";
 
 const NOOP = () => {};
 
@@ -10,7 +10,7 @@ export default class FormattedInput extends Component {
     constructor(props, ...rest) {
         super(props, ...rest);
         this.state = {
-            value: this.processValue(props.value, props)
+            value: formatValue(props.value, props.format)
         };
     }
 
@@ -36,15 +36,8 @@ export default class FormattedInput extends Component {
     onValueChange(event) {
         const inputValue = event.target.value;
         this.setState({
-            value: this.processValue(inputValue)
+            value: formatValue(inputValue, this.props.format)
         });
-    }
-
-    processValue(value, props = this.props) {
-        const newValue = filterValue(value, {
-            maxLength: this.props.maxLength
-        });
-        return formatValue(newValue, props.format);
     }
 
     render() {
@@ -71,7 +64,6 @@ export default class FormattedInput extends Component {
 FormattedInput.propTypes = {
     className: PropTypes.string,
     format: PropTypes.arrayOf(PropTypes.object),
-    maxLength: PropTypes.number,
     name: PropTypes.string,
     onChange: PropTypes.func,
     placeholder: PropTypes.string,
@@ -81,7 +73,6 @@ FormattedInput.propTypes = {
 FormattedInput.defaultProps = {
     className: "",
     format: [],
-    maxLength: Infinity,
     name: "",
     onChange: NOOP,
     placeholder: "",
