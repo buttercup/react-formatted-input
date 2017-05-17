@@ -14,12 +14,18 @@ export default class FormattedInput extends Component {
         };
     }
 
+    componentDidUpdate(prevProps, prevState) {
+        if (prevState.value !== this.state.value) {
+            // only fire callback if the value changes
+            this.props.onValueChange(this.state.value)
+        }
+    }
+
     onValueChange(event) {
         const inputValue = event.target.value;
-        this.setState(
-            { value: this.processValue(inputValue) },
-            () => this.props.onValueChange(this.state.value)
-        );
+        this.setState({
+            value: this.processValue(inputValue)
+        });
     }
 
     processValue(value, props = this.props) {
