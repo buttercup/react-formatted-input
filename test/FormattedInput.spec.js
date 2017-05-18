@@ -73,6 +73,22 @@ test("allows partial values", function() {
     expect(inputEl.props.value).toEqual("abc");
 });
 
+test("supports repeating 'exactly' groups", function() {
+    const pattern = [
+        { char: /[a-z]/i },
+        { exactly: "*", repeat: 3 },
+        { char: /[a-z]/i }
+    ];
+    const input = convertToObject(
+        <FormattedInput
+            format={pattern}
+            value="aaaa"
+            />
+    );
+    const inputEl = input.props.children;
+    expect(inputEl.props.value).toEqual("a***a");
+});
+
 test("automatically enters delimiters", function() {
     const pattern = [
         { char: /[0-9]/, repeat: 4 },

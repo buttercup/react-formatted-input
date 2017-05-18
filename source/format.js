@@ -7,10 +7,12 @@ import isRegex from "is-regex";
  */
 function expandFormatRepetitions(format) {
     return format.reduce(function __reducePatterns(patterns, nextItem) {
-        if (nextItem.repeat > 1 && isRegex(nextItem.char)) {
+        if (nextItem.repeat > 1) {
             const expanded = [];
+            const copy = { ...nextItem };
+            delete copy.repeat;
             for (let i = 0; i < nextItem.repeat; i += 1) {
-                expanded.push({ char: nextItem.char });
+                expanded.push({ ...copy });
             }
             return [...patterns, ...expanded];
         }
