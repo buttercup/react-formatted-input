@@ -1,3 +1,18 @@
+import isRegex from "is-regex";
+
+function expandFormatRepetitions(format) {
+    return format.reduce(function __reducePatterns(patterns, nextItem) {
+        if (nextItem.repeat > 1 && isRegex(nextItem.char)) {
+            const expanded = [];
+            for (let i = 0; i < nextItem.repeat; i += 1) {
+                expanded.push({ char: nextItem.char });
+            }
+            return [...patterns, ...expanded];
+        }
+        return [...patterns, nextItem];
+    }, []);
+}
+
 /**
  * Format a value for a pattern
  * @param {String} value The value to format
@@ -5,34 +20,30 @@
  * @returns {String} The formatted value
  */
 export function formatValue(value, formatSpec = []) {
-    const formats = [...formatSpec];
-    if (formats.length > 0) {
-        let formattedValue = "",
-            currentValue = value;
-        while (formats.length > 0 && currentValue.length > 0) {
-            const format = formats.shift();
-            if (typeof format.match === "object") {
-                if (isAnchoredToStart(format.match) !== true) {
-                    throw new Error(
-                        "Unable to format value: " +
-                        `Format regular expression is not anchored to the start of the string: ${format.match.toString()}`
-                    );
+    const format = expandFormatRepetitions(formatSpec);
+    if (format.length > 0) {
+        const characters = value.split("");
+        let formattedValue = "";
+        while (format.length > 0 && characters.length > 0) {
+            const pattern = format.shift();
+            if (typeof pattern.char === "object") {
+                while (characters.length > 0 && pattern.char.test(characters[0]) !== true) {
+                    characters.shift();
                 }
-                while (currentValue.length > 0 && format.match.test(currentValue) !== true) {
-                    currentValue = currentValue.substr(1);
+                if (characters.length > 0) {
+                    formattedValue += characters[0];
+                    characters.shift();
                 }
-                if (currentValue.length > 0) {
-                    const matchedText = currentValue.match(format.match)[0];
-                    currentValue = currentValue.substr(matchedText.length);
-                    formattedValue += matchedText;
+            } else if (typeof pattern.exactly === "string") {
+                if (pattern.exactly.length !== 1) {
+                    throw new Error(`Unable to format value: 'exactly' value should be of length 1: ${pattern.exactly}`);
                 }
-            } else if (typeof format.exactly === "string") {
-                formattedValue += format.exactly;
-                if (currentValue.indexOf(format.exactly) === 0) {
-                    currentValue = currentValue.substr(format.exactly.length);
+                formattedValue += pattern.exactly;
+                if (pattern.exactly === characters[0]) {
+                    characters.shift();
                 }
             } else {
-                throw new Error(`Unable to format value: Invalid format specification: ${JSON.stringify(format)}`);
+                throw new Error(`Unable to format value: Invalid format specification: ${JSON.stringify(pattern)}`);
             }
         }
         return formattedValue;

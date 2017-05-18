@@ -45,6 +45,7 @@
     "react-test-renderer": "^15.5.4"
   },
   "dependencies": {
+    "is-regex": "^1.0.4",
     "prop-types": "^15.5.10"
   },
   "jest": {
