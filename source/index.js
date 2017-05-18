@@ -71,14 +71,6 @@ export default class FormattedInput extends Component {
         );
     }
 
-    shouldComponentUpdate(nextProps, nextState) {
-        if (this.state.formattedValue === nextState.formattedValue) {
-            // no value change, cancel
-            return false;
-        }
-        return true;
-    }
-
 }
 
 FormattedInput.propTypes = {
