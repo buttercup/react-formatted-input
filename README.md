@@ -44,7 +44,7 @@ export default class MyForm extends Component {
                     className="formatted-input"
                     format={idPattern}
                     value={this.state.idNumber}
-                    onChange={value => { this.state.idNumber = value; }}
+                    onChange={(formattedValue, raw) => { this.state.idNumber = formattedValue; }}
                     placeholder="ID in format: NNN-NNL"
                     />
             </form>
