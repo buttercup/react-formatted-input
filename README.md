@@ -91,7 +91,7 @@ The initialisation value for the formatted input. This value is still run throug
 The format is a collection of patterns and delimiters that control what values can be entered. By default there is no format (so any input is allowed), but it can be set to an array of objects that are used to process the value upon every change:
 
  * **Character match** groups: A character match (`char`) is a regular expression designed to match just 1 character. It may also contain a `repeat` property to specify how many characters this pattern should match. `repeat` defaults to `1` if not specified. For example, `{ char: /\d/ }` will match exactly 1 number, whereas `{ char: /-/, repeat: 3 }` will match 3 dashes.
- * **Exact** groups: An exact group represents a string or character that must come next in the value. It can be used to specify mandatory delimiters in the value. For instance, `{ exactly: "." }` will enforce that a period appears next in the value. Exact groups also support the `repeat` property.
+ * **Exact** groups: An exact group represents a string or character that must come next in the value. It is used to specify mandatory delimiters in the value. For instance, `{ exactly: "." }` will enforce that a period appears next in the value. Exact groups also support the `repeat` property. Characters added using exact groups **do not appear in raw values**.
 
 When used in combination together, complex values like credit-card numbers can be easily represented:
 
@@ -120,7 +120,7 @@ Or even the expiry date of such a credit card:
 ```
 
 ### onChange _: Function_
-A callback function for when the value changes. The only received parameter is the new value. The function is only called if the value differs from the last one.
+A callback function for when the value changes. The function receives 2 parameters: the new formatted value and the new raw value, respectively. The function is only called if the formatted value differs from the last one.
 
 ### name, placeholder, className
 Formatted input instances pass through these props to the underlying `<input>` element.
