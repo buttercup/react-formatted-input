@@ -18,8 +18,15 @@ export default class FormattedInput extends Component {
         super(props, ...rest);
         this.state = {
             // format the provided value immediately
-            value: formatValue(props.value, props.format)
+            value: formatValue(props.value, this.getFormat(props))
         };
+    }
+
+    get inputType() {
+        if (this.props.type === "password") {
+            return "password";
+        }
+        return "text";
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -27,6 +34,12 @@ export default class FormattedInput extends Component {
             // only fire callback if the value changes
             this.props.onChange(this.state.value)
         }
+    }
+
+    getFormat(props = this.props) {
+        return (this.inputType === "password") ?
+            [] :
+            props.format;
     }
 
     /**
@@ -52,14 +65,14 @@ export default class FormattedInput extends Component {
     onValueChange(event) {
         const inputValue = event.target.value;
         this.setState({
-            value: formatValue(inputValue, this.props.format)
+            value: formatValue(inputValue, this.getFormat())
         });
     }
 
     render() {
         return (
             <input
-                type="text"
+                type={this.inputType}
                 {...this.getOptionalProps()}
                 value={this.state.value}
                 onChange={e => this.onValueChange(e)}
@@ -83,6 +96,7 @@ FormattedInput.propTypes = {
     name: PropTypes.string,
     onChange: PropTypes.func,
     placeholder: PropTypes.string,
+    type: PropTypes.string,
     value: PropTypes.string
 };
 
@@ -92,5 +106,6 @@ FormattedInput.defaultProps = {
     name: "",
     onChange: NOOP,
     placeholder: "",
+    type: "text",
     value: ""
 };

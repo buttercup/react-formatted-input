@@ -122,5 +122,8 @@ Or even the expiry date of such a credit card:
 ### onChange _: Function_
 A callback function for when the value changes. The only received parameter is the new value. The function is only called if the value differs from the last one.
 
+### type _: String_
+The input type to use (defaults to "text"). The type "password" is also supported, but this **disables formatting**.
+
 ### name, placeholder, className
 Formatted input instances pass through these props to the underlying `<input>` element.
