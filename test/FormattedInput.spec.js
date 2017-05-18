@@ -59,6 +59,20 @@ test("enforces maximum length through the use of a pattern", function() {
     expect(inputEl.props.value).toEqual("123456");
 });
 
+test("allows partial values", function() {
+    const pattern = [
+        { char: /[a-z]/i, repeat: 5 }
+    ];
+    const input = convertToObject(
+        <FormattedInput
+            format={pattern}
+            value="a1bc"
+            />
+    );
+    const inputEl = input.props.children;
+    expect(inputEl.props.value).toEqual("abc");
+});
+
 test("automatically enters delimiters", function() {
     const pattern = [
         { char: /[0-9]/, repeat: 4 },
