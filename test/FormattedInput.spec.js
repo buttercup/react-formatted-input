@@ -129,8 +129,9 @@ test("fires callback when value changes", function() {
         { char: /[a-zA-Z]/ }
     ];
     return new Promise(function(resolve) {
-        const callback = function(value) {
-            expect(value).toEqual("3:a");
+        const callback = function(formatted, raw) {
+            expect(formatted).toEqual("3:a");
+            expect(raw).toEqual("3a");
             resolve();
         };
         const wrapper = shallow(
