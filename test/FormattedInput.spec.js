@@ -30,9 +30,10 @@ test("supports optional <input> props", function() {
 
 test("it forces values to adhere to a pattern", function() {
     const pattern = [
-        { match: /^[0-9]{2}/ },
+        { char: /[0-9]/, repeat: 2 },
         { exactly: "/" },
-        { match: /^[12][0-9]{3}/ }
+        { char: /[12]/ },
+        { char: /[0-9]/, repeat: 3 }
     ];
     const input = convertToObject(
         <FormattedInput
@@ -46,7 +47,7 @@ test("it forces values to adhere to a pattern", function() {
 
 test("enforces maximum length through the use of a pattern", function() {
     const pattern = [
-        { match: /^.{6}/ }
+        { char: /./, repeat: 6 }
     ];
     const input = convertToObject(
         <FormattedInput
@@ -58,15 +59,45 @@ test("enforces maximum length through the use of a pattern", function() {
     expect(inputEl.props.value).toEqual("123456");
 });
 
+test("allows partial values", function() {
+    const pattern = [
+        { char: /[a-z]/i, repeat: 5 }
+    ];
+    const input = convertToObject(
+        <FormattedInput
+            format={pattern}
+            value="a1bc"
+            />
+    );
+    const inputEl = input.props.children;
+    expect(inputEl.props.value).toEqual("abc");
+});
+
+test("supports repeating 'exactly' groups", function() {
+    const pattern = [
+        { char: /[a-z]/i },
+        { exactly: "*", repeat: 3 },
+        { char: /[a-z]/i }
+    ];
+    const input = convertToObject(
+        <FormattedInput
+            format={pattern}
+            value="aaaa"
+            />
+    );
+    const inputEl = input.props.children;
+    expect(inputEl.props.value).toEqual("a***a");
+});
+
 test("automatically enters delimiters", function() {
     const pattern = [
-        { match: /^[0-9]{4}/ },
+        { char: /[0-9]/, repeat: 4 },
         { exactly: "-" },
-        { match: /^[0-9]{4}/ },
+        { char: /[0-9]/, repeat: 4 },
         { exactly: "-" },
-        { match: /^[0-9]{4}/ },
+        { char: /[0-9]/, repeat: 4 },
         { exactly: "-" },
-        { match: /^[0-9]{4}/ }
+        { char: /[0-9]/, repeat: 4 }
     ];
     const input = convertToObject(
         <FormattedInput
@@ -80,9 +111,9 @@ test("automatically enters delimiters", function() {
 
 test("fires callback when value changes", function() {
     const pattern = [
-        { match: /^[0-9]{1}/ },
+        { char: /[0-9]/ },
         { exactly: ":" },
-        { match: /^[a-z]{1}/i }
+        { char: /[a-zA-Z]/ }
     ];
     return new Promise(function(resolve) {
         const callback = function(value) {
@@ -101,9 +132,9 @@ test("fires callback when value changes", function() {
 
 test("leaves the value empty if provided as such", function() {
     const pattern = [
-        { match: /^[0-9]{1}/ },
+        { char: /[0-9]/ },
         { exactly: ":" },
-        { match: /^[a-z]{1}/i }
+        { char: /[a-zA-Z]/ }
     ];
     const input = convertToObject(
         <FormattedInput
@@ -117,9 +148,9 @@ test("leaves the value empty if provided as such", function() {
 
 test("updates to empty correctly", function() {
     const pattern = [
-        { match: /^[0-9]{1}/ },
+        { char: /[0-9]/ },
         { exactly: ":" },
-        { match: /^[a-z]{1}/i }
+        { char: /[a-zA-Z]/ }
     ];
     return new Promise(function(resolve) {
         const callback = function(value) {
@@ -139,11 +170,11 @@ test("updates to empty correctly", function() {
 
 test("leaves out the last delimiter if the string is short", function() {
     const pattern = [
-        { match: /^[0-9]{1}/ },
+        { char: /[0-9]/ },
         { exactly: ":" },
-        { match: /^[a-z]{1}/i },
+        { char: /[a-z]/i },
         { exactly: ":" },
-        { match: /^[a-z]{1}/i }
+        { char: /[a-z]/i }
     ];
     const input = convertToObject(
         <FormattedInput

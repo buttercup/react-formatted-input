@@ -1,15 +1,17 @@
 export const CreditCard = [
-    { match: /^\d{4}/ },
+    { char: /\d/, repeat: 4 },
     { exactly: "-" },
-    { match: /^\d{4}/ },
+    { char: /\d/, repeat: 4 },
     { exactly: "-" },
-    { match: /^\d{4}/ },
+    { char: /\d/, repeat: 4 },
     { exactly: "-" },
-    { match: /^\d{4}/ }
+    { char: /\d/, repeat: 4 }
 ];
 
 export const CreditCardDate = [
-    { match: /^[01][0-9]/ },
+    { char: /[01]/ },
+    { char: /[0-9]/ },
     { exactly: "/" },
-    { match: /^2[0-9]{3}/ }
+    { char: /2/ },
+    { char: /[0-9]/, repeat: 3 }
 ];

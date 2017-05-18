@@ -29,9 +29,10 @@ export default class MyForm extends Component {
 
     render() {
         const idPattern = [
-            { match: /^\d{3}/ },
+            { char: /\d/, repeat: 3 },
             { exactly: "-" },
-            { match: /^\d{2}[a-z]{1}/i }
+            { char: /\d/, repeat: 2 },
+            { char: /[a-z]/i }
         ];
         return (
             <form>
@@ -89,20 +90,20 @@ The initialisation value for the formatted input. This value is still run throug
 ### format _: Array_
 The format is a collection of patterns and delimiters that control what values can be entered. By default there is no format (so any input is allowed), but it can be set to an array of objects that are used to process the value upon every change:
 
- * **Match** groups: A match is a regular expression, anchored to the start of the string, that validates a group of characters. For example, `{ match: /^\d{3}/ }` will permit exactly 3 digits to be entered.
- * **Exact** groups: An exact group represents a string or character that must come next in the value. It can be used to specify mandatory delimiters in the value. For instance, `{ exactly: "." }` will enforce that a period appears next in the value.
+ * **Character match** groups: A character match (`char`) is a regular expression designed to match just 1 character. It may also contain a `repeat` property to specify how many characters this pattern should match. `repeat` defaults to `1` if not specified. For example, `{ char: /\d/ }` will match exactly 1 number, whereas `{ char: /-/, repeat: 3 }` will match 3 dashes.
+ * **Exact** groups: An exact group represents a string or character that must come next in the value. It can be used to specify mandatory delimiters in the value. For instance, `{ exactly: "." }` will enforce that a period appears next in the value. Exact groups also support the `repeat` property.
 
 When used in combination together, complex values like credit-card numbers can be easily represented:
 
 ```javascript
 [
-    { match: /^\d{4}/ },
+    { char: /\d/, repeat: 4 },
     { exactly: "-" },
-    { match: /^\d{4}/ },
+    { char: /\d/, repeat: 4 },
     { exactly: "-" },
-    { match: /^\d{4}/ },
+    { char: /\d/, repeat: 4 },
     { exactly: "-" },
-    { match: /^\d{4}/ }
+    { char: /\d/, repeat: 4 }
 ]
 ```
 
@@ -110,9 +111,11 @@ Or even the expiry date of such a credit card:
 
 ```javascript
 [
-    { match: /^[01][0-9]/ }, // month, 2 digits
+    { char: /[01]/ },  // month, 2 digits
+    { char: /[0-9]/ }, // "
     { exactly: "/" },
-    { match: /^2[0-9]{3}/ } // year, 4 digits
+    { char: /2/ },                  // year, 4 digits
+    { char: /[0-9]/, repeat: 3 }    // "
 ]
 ```
 
