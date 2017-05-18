@@ -8,6 +8,10 @@ export const CreditCard = [
     { char: /\d/, repeat: 4 }
 ];
 
+export const CreditCardCVV = [
+    { char: /\d/, repeat: 4 }
+];
+
 export const CreditCardDate = [
     { char: /[01]/ },
     { char: /[0-9]/ },
