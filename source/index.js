@@ -17,11 +17,18 @@ export default class FormattedInput extends Component {
     constructor(props, ...rest) {
         super(props, ...rest);
         // format the provided value immediately
-        const { formatted, raw } = formatValue(props.value, props.format);
+        const { formatted, raw } = formatValue(props.value, this.getFormat(props));
         this.state = {
             rawValue: raw,
             formattedValue: formatted
         };
+    }
+
+    get inputType() {
+        if (this.props.type === "password") {
+            return "password";
+        }
+        return "text";
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -29,6 +36,12 @@ export default class FormattedInput extends Component {
             // only fire callback if the value changes
             this.props.onChange(this.state.formattedValue, this.state.rawValue);
         }
+    }
+
+    getFormat(props = this.props) {
+        return (this.inputType === "password") ?
+            [] :
+            props.format;
     }
 
     /**
@@ -53,9 +66,9 @@ export default class FormattedInput extends Component {
      */
     onValueChange(event) {
         const inputValue = event.target.value;
-        const { formatted, raw } = formatValue(inputValue, this.props.format);
+        const { formatted, raw } = formatValue(inputValue, this.getFormat());
         this.setState({
-            rawValue:  raw,
+            rawValue: raw,
             formattedValue: formatted
         });
     }
@@ -63,7 +76,7 @@ export default class FormattedInput extends Component {
     render() {
         return (
             <input
-                type="text"
+                type={this.inputType}
                 {...this.getOptionalProps()}
                 value={this.state.formattedValue}
                 onChange={e => this.onValueChange(e)}
@@ -79,6 +92,7 @@ FormattedInput.propTypes = {
     name: PropTypes.string,
     onChange: PropTypes.func,
     placeholder: PropTypes.string,
+    type: PropTypes.string,
     value: PropTypes.string
 };
 
@@ -88,5 +102,6 @@ FormattedInput.defaultProps = {
     name: "",
     onChange: NOOP,
     placeholder: "",
+    type: "text",
     value: ""
 };
