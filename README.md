@@ -8,9 +8,9 @@ An input component that abides by configurable formatting and constraint rules
 
 This is useful for custom inputs that are designed to take values of a certain type, often mapping to real world information like credit card details or dates.
 
-<center>
+<div style="text-align:center">
     <img src="creditcard.gif" />
-</center>
+</div>
 
 ## Installation
 To install, simply run `npm install @buttercup/react-formatted-input --save` or `yarn add @buttercup/react-formatted-input`.
