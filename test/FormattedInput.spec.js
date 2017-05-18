@@ -28,6 +28,19 @@ test("supports optional <input> props", function() {
     expect(inputEl.props.className).toEqual("class1 class2");
 });
 
+test("supports password type, which disables format", function() {
+    const input = convertToObject(
+        <FormattedInput
+            value="abc"
+            format={[{ char: /a/ }]}
+            type="password"
+            />
+    );
+    const inputEl = input.props.children;
+    expect(inputEl.props.value).toEqual("abc");
+    expect(inputEl.props.type).toEqual("password");
+});
+
 test("it forces values to adhere to a pattern", function() {
     const pattern = [
         { char: /[0-9]/, repeat: 2 },
