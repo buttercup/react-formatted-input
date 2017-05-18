@@ -21,16 +21,24 @@ function expandFormatRepetitions(format) {
 }
 
 /**
+ * Formatted and raw values post processing
+ * @typedef {Object} FormattingResults
+ * @property {String} formatted - The formatted value (includes delimiters)
+ * @property {String} raw - The raw value (excludes delimiters)
+ */
+
+/**
  * Format a value for a pattern
  * @param {String} value The value to format
  * @param {Array.<Object>=} formatSpec The formatting specification to apply to the value
- * @returns {String} The formatted value
+ * @returns {FormattingResults} The formatted and raw values
  */
 export function formatValue(value, formatSpec = []) {
     const format = expandFormatRepetitions(formatSpec);
     if (format.length > 0) {
         const characters = value.split("");
-        let formattedValue = "";
+        let formattedValue = "",
+            rawValue = "";
         while (format.length > 0 && characters.length > 0) {
             const pattern = format.shift();
             if (typeof pattern.char === "object") {
@@ -39,6 +47,7 @@ export function formatValue(value, formatSpec = []) {
                 }
                 if (characters.length > 0) {
                     formattedValue += characters[0];
+                    rawValue += characters[0];
                     characters.shift();
                 }
             } else if (typeof pattern.exactly === "string") {
@@ -53,16 +62,7 @@ export function formatValue(value, formatSpec = []) {
                 throw new Error(`Unable to format value: Invalid format specification: ${JSON.stringify(pattern)}`);
             }
         }
-        return formattedValue;
+        return { formatted: formattedValue, raw: rawValue };
     }
-    return value;
-}
-
-/**
- * Check if a regular expression is anchored to the start of the string
- * Checks to see if the first character in the expression is the start-anchor carat ^
- */
-function isAnchoredToStart(regex) {
-    const rexpStr = regex.toString();
-    return /^\/\^/.test(rexpStr);
+    return { formatted: value, raw: value };
 }

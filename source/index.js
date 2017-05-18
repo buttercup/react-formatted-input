@@ -16,16 +16,18 @@ export default class FormattedInput extends Component {
 
     constructor(props, ...rest) {
         super(props, ...rest);
+        // format the provided value immediately
+        const { formatted, raw } = formatValue(props.value, props.format);
         this.state = {
-            // format the provided value immediately
-            value: formatValue(props.value, props.format)
+            rawValue: raw,
+            formattedValue: formatted
         };
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if (prevState.value !== this.state.value) {
+        if (prevState.formattedValue !== this.state.formattedValue) {
             // only fire callback if the value changes
-            this.props.onChange(this.state.value)
+            this.props.onChange(this.state.formattedValue, this.state.rawValue);
         }
     }
 
@@ -51,8 +53,10 @@ export default class FormattedInput extends Component {
      */
     onValueChange(event) {
         const inputValue = event.target.value;
+        const { formatted, raw } = formatValue(inputValue, this.props.format);
         this.setState({
-            value: formatValue(inputValue, this.props.format)
+            rawValue:  raw,
+            formattedValue: formatted
         });
     }
 
@@ -61,14 +65,14 @@ export default class FormattedInput extends Component {
             <input
                 type="text"
                 {...this.getOptionalProps()}
-                value={this.state.value}
+                value={this.state.formattedValue}
                 onChange={e => this.onValueChange(e)}
                 />
         );
     }
 
     shouldComponentUpdate(nextProps, nextState) {
-        if (this.state.value === nextState.value) {
+        if (this.state.formattedValue === nextState.formattedValue) {
             // no value change, cancel
             return false;
         }
