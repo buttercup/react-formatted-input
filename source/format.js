@@ -1,5 +1,10 @@
 import isRegex from "is-regex";
 
+/**
+ * Expand an array of patterns by duplicating those with `repeat` properties
+ * @param {Array.<Object>} format An array of patterns
+ * @returns {Array.<Object>} An expanded array of patterns (1 per character in value)
+ */
 function expandFormatRepetitions(format) {
     return format.reduce(function __reducePatterns(patterns, nextItem) {
         if (nextItem.repeat > 1 && isRegex(nextItem.char)) {
