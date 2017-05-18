@@ -1,9 +1,8 @@
 import React from "react";
 import { convertToObject } from "react-json-renderer";
 import { shallow } from "enzyme";
-import { spy } from "sinon";
 
-import FormattedInput from "../source/index.jsx";
+import FormattedInput from "../source/index.js";
 
 test("accepts a value upon initialisation", function() {
     const input = convertToObject(
