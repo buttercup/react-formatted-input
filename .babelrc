@@ -1,6 +1,15 @@
 {
-  "presets": ["es2015", "react"],
+  "presets": [
+    ["@babel/preset-env", {
+      "debug": true,
+      "targets": {
+        "chrome": "60"
+      }
+    }],
+    "@babel/preset-react"
+  ],
   "plugins": [
-    ["transform-object-rest-spread", { "useBuiltIns": true }]
+    ["@babel/plugin-proposal-object-rest-spread", { "useBuiltIns": true }],
+    "@babel/plugin-proposal-class-properties"
   ]
 }

@@ -12,8 +12,5 @@ insert_final_newline = true
 max_line_length = 0
 trim_trailing_whitespace = false
 
-[.eslintrc]
-[.travis.yml]
-[package.json]
-[.babelrc]
+[{.travis.yml,package.json,package-lock.json,.babelrc}]
 indent_size = 2

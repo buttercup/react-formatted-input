@@ -1,44 +1,41 @@
 import React from "react";
-import { convertToObject } from "react-json-renderer";
+import TestRenderer from "react-test-renderer";
 import { shallow } from "enzyme";
 
-import FormattedInput from "../source/index.js";
+import { FormattedInput, Presets } from "../source/index.js";
 
 test("accepts a value upon initialisation", function() {
-    const input = convertToObject(
+    const input = TestRenderer.create(
         <FormattedInput
             value="test value"
             />
-    );
-    const inputEl = input.props.children;
-    expect(inputEl.props.value).toEqual("test value");
+    ).toTree();
+    expect(input.rendered.props.value).toEqual("test value");
 });
 
 test("supports optional <input> props", function() {
-    const input = convertToObject(
+    const input = TestRenderer.create(
         <FormattedInput
             name="myInput"
             placeholder="Your text here"
             className="class1 class2"
             />
-    );
-    const inputEl = input.props.children;
-    expect(inputEl.props.name).toEqual("myInput");
-    expect(inputEl.props.placeholder).toEqual("Your text here");
-    expect(inputEl.props.className).toEqual("class1 class2");
+    ).toTree();
+    expect(input.rendered.props.name).toEqual("myInput");
+    expect(input.rendered.props.placeholder).toEqual("Your text here");
+    expect(input.rendered.props.className).toEqual("class1 class2");
 });
 
 test("supports password type, which disables format", function() {
-    const input = convertToObject(
+    const input = TestRenderer.create(
         <FormattedInput
             value="abc"
             format={[{ char: /a/ }]}
             type="password"
             />
-    );
-    const inputEl = input.props.children;
-    expect(inputEl.props.value).toEqual("abc");
-    expect(inputEl.props.type).toEqual("password");
+    ).toTree();
+    expect(input.rendered.props.value).toEqual("abc");
+    expect(input.rendered.props.type).toEqual("password");
 });
 
 test("it forces values to adhere to a pattern", function() {
@@ -48,42 +45,39 @@ test("it forces values to adhere to a pattern", function() {
         { char: /[12]/ },
         { char: /[0-9]/, repeat: 3 }
     ];
-    const input = convertToObject(
+    const input = TestRenderer.create(
         <FormattedInput
             format={pattern}
             value="bad19/2005extra"
             />
-    );
-    const inputEl = input.props.children;
-    expect(inputEl.props.value).toEqual("19/2005");
+    ).toTree();
+    expect(input.rendered.props.value).toEqual("19/2005");
 });
 
 test("enforces maximum length through the use of a pattern", function() {
     const pattern = [
         { char: /./, repeat: 6 }
     ];
-    const input = convertToObject(
+    const input = TestRenderer.create(
         <FormattedInput
             format={pattern}
             value="123456789"
             />
-    );
-    const inputEl = input.props.children;
-    expect(inputEl.props.value).toEqual("123456");
+    ).toTree();
+    expect(input.rendered.props.value).toEqual("123456");
 });
 
 test("allows partial values", function() {
     const pattern = [
         { char: /[a-z]/i, repeat: 5 }
     ];
-    const input = convertToObject(
+    const input = TestRenderer.create(
         <FormattedInput
             format={pattern}
             value="a1bc"
             />
-    );
-    const inputEl = input.props.children;
-    expect(inputEl.props.value).toEqual("abc");
+    ).toTree();
+    expect(input.rendered.props.value).toEqual("abc");
 });
 
 test("supports repeating 'exactly' groups", function() {
@@ -92,14 +86,13 @@ test("supports repeating 'exactly' groups", function() {
         { exactly: "*", repeat: 3 },
         { char: /[a-z]/i }
     ];
-    const input = convertToObject(
+    const input = TestRenderer.create(
         <FormattedInput
             format={pattern}
             value="aaaa"
             />
-    );
-    const inputEl = input.props.children;
-    expect(inputEl.props.value).toEqual("a***a");
+    ).toTree();
+    expect(input.rendered.props.value).toEqual("a***a");
 });
 
 test("automatically enters delimiters", function() {
@@ -112,14 +105,13 @@ test("automatically enters delimiters", function() {
         { exactly: "-" },
         { char: /[0-9]/, repeat: 4 }
     ];
-    const input = convertToObject(
+    const input = TestRenderer.create(
         <FormattedInput
             format={pattern}
             value="3204651290010002"
             />
-    );
-    const inputEl = input.props.children;
-    expect(inputEl.props.value).toEqual("3204-6512-9001-0002");
+    ).toTree();
+    expect(input.rendered.props.value).toEqual("3204-6512-9001-0002");
 });
 
 test("fires callback when value changes", function() {
@@ -150,14 +142,13 @@ test("leaves the value empty if provided as such", function() {
         { exactly: ":" },
         { char: /[a-zA-Z]/ }
     ];
-    const input = convertToObject(
+    const input = TestRenderer.create(
         <FormattedInput
             format={pattern}
             value=""
             />
-    );
-    const inputEl = input.props.children;
-    expect(inputEl.props.value).toEqual("");
+    ).toTree();
+    expect(input.rendered.props.value).toEqual("");
 });
 
 test("updates to empty correctly", function() {
@@ -190,12 +181,37 @@ test("leaves out the last delimiter if the string is short", function() {
         { exactly: ":" },
         { char: /[a-z]/i }
     ];
-    const input = convertToObject(
+    const input = TestRenderer.create(
         <FormattedInput
             format={pattern}
             value="5c"
             />
+    ).toTree();
+    expect(input.rendered.props.value).toEqual("5:c");
+});
+
+test("supports presets", function() {
+    const input = TestRenderer.create(
+        <FormattedInput
+            format={Presets.CreditCard}
+            value="3204651290010002"
+            />
+    ).toTree();
+    expect(input.rendered.props.value).toEqual("3204-6512-9001-0002");
+});
+
+test("supports custom components", function() {
+    const Comp = () => (
+        <span></span>
     );
-    const inputEl = input.props.children;
-    expect(inputEl.props.value).toEqual("5:c");
+    const testRenderer = TestRenderer.create(
+        <FormattedInput
+            element={Comp}
+            value="test"
+        />
+    );
+    const testInstance = testRenderer.root;
+    expect(testRenderer.toTree().rendered.props.value).toEqual("test");
+    expect(testInstance.findByType("span")).toBeDefined();
+    expect(() => testInstance.findByType("input")).toThrow();
 });
