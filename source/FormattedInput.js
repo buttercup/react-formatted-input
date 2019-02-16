@@ -13,7 +13,6 @@ export const Presets = PatternPresets;
  * @augments Component
  */
 export default class FormattedInput extends Component {
-
     constructor(props, ...rest) {
         super(props, ...rest);
         // format the provided value immediately
@@ -83,7 +82,6 @@ export default class FormattedInput extends Component {
                 />
         );
     }
-
 }
 
 FormattedInput.propTypes = {
