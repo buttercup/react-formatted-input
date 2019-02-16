@@ -2,7 +2,7 @@ import React from "react";
 import { convertToObject } from "react-json-renderer";
 import { shallow } from "enzyme";
 
-import { FormattedInput } from "../source/index.js";
+import { FormattedInput, Presets } from "../source/index.js";
 
 test("accepts a value upon initialisation", function() {
     const input = convertToObject(
@@ -198,4 +198,15 @@ test("leaves out the last delimiter if the string is short", function() {
     );
     const inputEl = input.props.children;
     expect(inputEl.props.value).toEqual("5:c");
+});
+
+test("supports presets", function() {
+    const input = convertToObject(
+        <FormattedInput
+            format={Presets.CreditCard}
+            value="3204651290010002"
+            />
+    );
+    const inputEl = input.props.children;
+    expect(inputEl.props.value).toEqual("3204-6512-9001-0002");
 });
