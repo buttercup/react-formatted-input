@@ -2,7 +2,7 @@ import React from "react";
 import { convertToObject } from "react-json-renderer";
 import { shallow } from "enzyme";
 
-import FormattedInput from "../source/index.js";
+import { FormattedInput } from "../source/index.js";
 
 test("accepts a value upon initialisation", function() {
     const input = convertToObject(
