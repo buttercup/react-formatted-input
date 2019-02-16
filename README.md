@@ -18,8 +18,8 @@ To install, simply run `npm install @buttercup/react-formatted-input --save` or 
 ## Usage
 Import the `FormattedInput` class and just drop it in:
 
-```jsx
-import FormattedInput from "@buttercup/react-formatted-input";
+```javascript
+import { FormattedInput } from "@buttercup/react-formatted-input";
 import React, { Component } from "react";
 
 export default class MyForm extends Component {
@@ -54,11 +54,51 @@ export default class MyForm extends Component {
 }
 ```
 
+There is also a `FormattedText` class which simply outputs a text node:
+
+```javascript
+import React from "react";
+import { FormattedText } from "@buttercup/react-formatted-input";
+
+// MM/YYYY
+const DateFormat = [
+    { char: /[01]/, repeat: 1 },
+    { char: /\d/, repeat: 1 },
+    { exactly: "/" },
+    { char: /2/, repeat: 1 },
+    { char: /\d/, repeat: 3 }
+];
+
+const MyComponent = () => (
+    <span>
+        <FormattedText value="01/2019" format={DateFormat} />
+    </span>
+);
+```
+
+You can also import just the `format` function:
+
+```javascript
+import { format } from "@buttercup/react-formatted-input";
+
+const USPhoneNumberFormat = [
+    { char: /\d/, repeat: 3 },
+    { exactly: "-" },
+    { char: /\d/, repeat: 3 },
+    { exactly: "-" },
+    { char: /\d/, repeat: 4 }
+];
+
+const { formatted, raw } = format("2025550199", USPhoneNumberFormat);
+// formatted = 202-555-0199
+// raw = 2025550199
+```
+
 ### Presets
 Some presets are available in the `source/presets.js` file that might be used like so:
 
-```jsx
-import FormattedInput, { Presets } from "@buttercup/react-formatted-input";
+```javascript
+import { FormattedInput, Presets } from "@buttercup/react-formatted-input";
 import React, { Component } from "react";
 
 export default class MyForm extends Component {
