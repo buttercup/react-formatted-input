@@ -1,5 +1,13 @@
 # react-formatted-input changelog
 
+## v1.0.0
+_2019-02-16_
+
+ * Introduce `FormattedText` component, for formatting simple text
+ * Expose `format` function for formatting text
+ * Move `FormattedInput` to regular export
+ * Add `element` prop for `FormattedInput` so custom input elements can be used
+
 ## v0.4.0
 _2017-05-18_
 
