@@ -13,6 +13,28 @@ export const Presets = PatternPresets;
  * @augments Component
  */
 export default class FormattedInput extends Component {
+    static propTypes = {
+        className: PropTypes.string,
+        element: PropTypes.elementType.isRequired,
+        format: PropTypes.arrayOf(PropTypes.object).isRequired,
+        name: PropTypes.string,
+        onChange: PropTypes.func.isRequired,
+        placeholder: PropTypes.string.isRequired,
+        type: PropTypes.string.isRequired,
+        value: PropTypes.string.isRequired
+    };
+
+    static defaultProps = {
+        className: "",
+        element: "input",
+        format: [],
+        name: "",
+        onChange: NOOP,
+        placeholder: "",
+        type: "text",
+        value: ""
+    };
+
     constructor(props, ...rest) {
         super(props, ...rest);
         // format the provided value immediately
@@ -73,33 +95,14 @@ export default class FormattedInput extends Component {
     }
 
     render() {
+        const { element: Element } = this.props;
         return (
-            <input
+            <Element
                 type={this.inputType}
                 {...this.getOptionalProps()}
                 value={this.state.formattedValue}
                 onChange={e => this.onValueChange(e)}
-                />
+            />
         );
     }
 }
-
-FormattedInput.propTypes = {
-    className: PropTypes.string,
-    format: PropTypes.arrayOf(PropTypes.object),
-    name: PropTypes.string,
-    onChange: PropTypes.func,
-    placeholder: PropTypes.string,
-    type: PropTypes.string,
-    value: PropTypes.string
-};
-
-FormattedInput.defaultProps = {
-    className: "",
-    format: [],
-    name: "",
-    onChange: NOOP,
-    placeholder: "",
-    type: "text",
-    value: ""
-};

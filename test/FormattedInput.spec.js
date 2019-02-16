@@ -199,3 +199,19 @@ test("supports presets", function() {
     ).toTree();
     expect(input.rendered.props.value).toEqual("3204-6512-9001-0002");
 });
+
+test("supports custom components", function() {
+    const Comp = () => (
+        <span></span>
+    );
+    const testRenderer = TestRenderer.create(
+        <FormattedInput
+            element={Comp}
+            value="test"
+        />
+    );
+    const testInstance = testRenderer.root;
+    expect(testRenderer.toTree().rendered.props.value).toEqual("test");
+    expect(testInstance.findByType("span")).toBeDefined();
+    expect(() => testInstance.findByType("input")).toThrow();
+});
