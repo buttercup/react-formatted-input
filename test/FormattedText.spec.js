@@ -11,3 +11,15 @@ test("accepts a value upon initialisation", function() {
     const el = testRenderer.toTree();
     expect(el.props.value).toBe("test value");
 });
+
+test("formats values", function() {
+    const testRenderer = TestRenderer.create(
+        <FormattedText value="ab" format={[
+            { char: /\w/, repeat: 1 },
+            { exactly: "-" },
+            { char: /\w/, repeat: 1 }
+        ]} />
+    );
+    const el = testRenderer.toTree();
+    expect(el.rendered).toBe("a-b");
+});
