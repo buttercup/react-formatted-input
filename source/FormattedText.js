@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { formatValue } from "./format.js";
 
@@ -14,9 +14,9 @@ export default class FormattedText extends Component {
 
     render() {
         return (
-            <span>
+            <>
                 {formatValue(this.props.value, this.props.format).formatted}
-            </span>
+            </>
         );
     }
 }
