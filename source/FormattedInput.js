@@ -8,10 +8,6 @@ const NOOP = () => {};
 
 export const Presets = PatternPresets;
 
-/**
- * Formatted Input component
- * @augments Component
- */
 export default class FormattedInput extends Component {
     static propTypes = {
         className: PropTypes.string,
