@@ -49,16 +49,20 @@ export default class FormattedInput extends Component {
     }
 
     componentDidUpdate(prevProps, prevState) {
-        if (prevState.formattedValue !== this.state.formattedValue) {
+        if (prevProps.value !== this.props.value) {
+            const { formatted: formattedValue, raw: rawValue } = formatValue(
+                this.props.value,
+                this.getFormat(this.props)
+            );
+            this.setState({ formattedValue, rawValue });
+        } else if (prevState.formattedValue !== this.state.formattedValue) {
             // only fire callback if the value changes
             this.props.onChange(this.state.formattedValue, this.state.rawValue);
         }
     }
 
     getFormat(props = this.props) {
-        return (this.inputType === "password") ?
-            [] :
-            props.format;
+        return this.inputType === "password" ? [] : props.format;
     }
 
     /**
