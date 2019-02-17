@@ -1,5 +1,10 @@
 # react-formatted-input changelog
 
+## v1.0.1
+_2019-02-17_
+
+ * Fix late prop updates for state
+
 ## v1.0.0
 _2019-02-16_
 
