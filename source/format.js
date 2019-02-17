@@ -52,14 +52,22 @@ export function formatValue(value, formatSpec = []) {
                 }
             } else if (typeof pattern.exactly === "string") {
                 if (pattern.exactly.length !== 1) {
-                    throw new Error(`Unable to format value: 'exactly' value should be of length 1: ${pattern.exactly}`);
+                    throw new Error(
+                        `Unable to format value: 'exactly' value should be of length 1: ${
+                            pattern.exactly
+                        }`
+                    );
                 }
                 formattedValue += pattern.exactly;
                 if (pattern.exactly === characters[0]) {
                     characters.shift();
                 }
             } else {
-                throw new Error(`Unable to format value: Invalid format specification: ${JSON.stringify(pattern)}`);
+                throw new Error(
+                    `Unable to format value: Invalid format specification: ${JSON.stringify(
+                        pattern
+                    )}`
+                );
             }
         }
         return { formatted: formattedValue, raw: rawValue };

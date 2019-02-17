@@ -13,10 +13,6 @@ export default class FormattedText extends Component {
     };
 
     render() {
-        return (
-            <>
-                {formatValue(this.props.value, this.props.format).formatted}
-            </>
-        );
+        return <>{formatValue(this.props.value, this.props.format).formatted}</>;
     }
 }

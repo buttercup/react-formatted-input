@@ -27,6 +27,7 @@ test("supports password type, which disables format", function() {
 });
 
 test("it forces values to adhere to a pattern", function() {
+    // prettier-ignore
     const pattern = [
         { char: /[0-9]/, repeat: 2 },
         { exactly: "/" },
@@ -48,7 +49,10 @@ test("enforces maximum length through the use of a pattern", function() {
 });
 
 test("allows partial values", function() {
-    const pattern = [{ char: /[a-z]/i, repeat: 5 }];
+    // prettier-ignore
+    const pattern = [
+        { char: /[a-z]/i, repeat: 5 }
+    ];
     const input = TestRenderer.create(<FormattedInput format={pattern} value="a1bc" />).toTree();
     expect(input.rendered.props.value).toEqual("abc");
 });
@@ -60,6 +64,7 @@ test("supports repeating 'exactly' groups", function() {
 });
 
 test("automatically enters delimiters", function() {
+    // prettier-ignore
     const pattern = [
         { char: /[0-9]/, repeat: 4 },
         { exactly: "-" },
@@ -76,7 +81,12 @@ test("automatically enters delimiters", function() {
 });
 
 test("fires callback when value changes", function() {
-    const pattern = [{ char: /[0-9]/ }, { exactly: ":" }, { char: /[a-zA-Z]/ }];
+    // prettier-ignore
+    const pattern = [
+        { char: /[0-9]/ },
+        { exactly: ":" },
+        { char: /[a-zA-Z]/ }
+    ];
     return new Promise(function(resolve) {
         const callback = function(formatted, raw) {
             expect(formatted).toEqual("3:a");
@@ -89,13 +99,23 @@ test("fires callback when value changes", function() {
 });
 
 test("leaves the value empty if provided as such", function() {
-    const pattern = [{ char: /[0-9]/ }, { exactly: ":" }, { char: /[a-zA-Z]/ }];
+    // prettier-ignore
+    const pattern = [
+        { char: /[0-9]/ },
+        { exactly: ":" },
+        { char: /[a-zA-Z]/ }
+    ];
     const input = TestRenderer.create(<FormattedInput format={pattern} value="" />).toTree();
     expect(input.rendered.props.value).toEqual("");
 });
 
 test("updates to empty correctly", function() {
-    const pattern = [{ char: /[0-9]/ }, { exactly: ":" }, { char: /[a-zA-Z]/ }];
+    // prettier-ignore
+    const pattern = [
+        { char: /[0-9]/ },
+        { exactly: ":" },
+        { char: /[a-zA-Z]/ }
+    ];
     return new Promise(function(resolve) {
         const callback = function(value) {
             expect(value).toEqual("");
@@ -107,6 +127,7 @@ test("updates to empty correctly", function() {
 });
 
 test("leaves out the last delimiter if the string is short", function() {
+    // prettier-ignore
     const pattern = [
         { char: /[0-9]/ },
         { exactly: ":" },
@@ -137,7 +158,6 @@ test("supports custom components", function() {
 test("updates props correctly", function() {
     const input = TestRenderer.create(<FormattedInput value="test" />);
     expect(input.toTree().rendered.props.value).toEqual("test");
-
     input.update(<FormattedInput value="" />);
     expect(input.toTree().rendered.props.value).toEqual("");
 });
