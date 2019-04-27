@@ -1,5 +1,10 @@
 # react-formatted-input changelog
 
+## v1.1.0
+_2019-04-27_
+
+ * `onBlur` event support
+
 ## v1.0.1
 _2019-02-17_
 
