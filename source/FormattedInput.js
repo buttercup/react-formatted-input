@@ -15,6 +15,7 @@ export default class FormattedInput extends Component {
         format: PropTypes.arrayOf(PropTypes.object).isRequired,
         name: PropTypes.string,
         onChange: PropTypes.func.isRequired,
+        onBlur: PropTypes.func,
         placeholder: PropTypes.string.isRequired,
         type: PropTypes.string.isRequired,
         value: PropTypes.string.isRequired
@@ -26,6 +27,7 @@ export default class FormattedInput extends Component {
         format: [],
         name: "",
         onChange: NOOP,
+        onBlur: NOOP,
         placeholder: "",
         type: "text",
         value: ""
@@ -95,13 +97,14 @@ export default class FormattedInput extends Component {
     }
 
     render() {
-        const { element: Element } = this.props;
+        const { element: Element, onBlur } = this.props;
         return (
             <Element
                 type={this.inputType}
                 {...this.getOptionalProps()}
                 value={this.state.formattedValue}
                 onChange={e => this.onValueChange(e)}
+                onBlur={e => onBlur(e) || null}
             />
         );
     }
