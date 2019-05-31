@@ -10,25 +10,17 @@ export const Presets = PatternPresets;
 
 export default class FormattedInput extends Component {
     static propTypes = {
-        className: PropTypes.string,
         element: PropTypes.elementType.isRequired,
         format: PropTypes.arrayOf(PropTypes.object).isRequired,
-        name: PropTypes.string,
         onChange: PropTypes.func.isRequired,
-        onBlur: PropTypes.func,
-        placeholder: PropTypes.string.isRequired,
         type: PropTypes.string.isRequired,
         value: PropTypes.string.isRequired
     };
 
     static defaultProps = {
-        className: "",
         element: "input",
         format: [],
-        name: "",
         onChange: NOOP,
-        onBlur: NOOP,
-        placeholder: "",
         type: "text",
         value: ""
     };
@@ -68,22 +60,6 @@ export default class FormattedInput extends Component {
     }
 
     /**
-     * Fetch optional pass-through props for the underlying input
-     * @returns {Object} A props object to be spread onto the input
-     */
-    getOptionalProps() {
-        return ["name", "placeholder", "className"].reduce((props, propName) => {
-            if (this.props[propName].length > 0) {
-                return {
-                    ...props,
-                    [propName]: this.props[propName]
-                };
-            }
-            return props;
-        }, {});
-    }
-
-    /**
      * Handle value changes
      * @param {Object} event An input change event
      */
@@ -97,14 +73,13 @@ export default class FormattedInput extends Component {
     }
 
     render() {
-        const { element: Element, onBlur } = this.props;
+        const { element: Element } = this.props;
         return (
             <Element
                 type={this.inputType}
-                {...this.getOptionalProps()}
+                {...this.props}
                 value={this.state.formattedValue}
                 onChange={e => this.onValueChange(e)}
-                onBlur={e => onBlur(e) || null}
             />
         );
     }
