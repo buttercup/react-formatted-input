@@ -8,6 +8,8 @@ const NOOP = () => {};
 
 export const Presets = PatternPresets;
 
+const PROPS_TO_EXCLUDE = ["element", "value", "onChange"];
+
 export default class FormattedInput extends Component {
     static propTypes = {
         element: PropTypes.elementType.isRequired,
@@ -60,6 +62,22 @@ export default class FormattedInput extends Component {
     }
 
     /**
+     * Fetch optional pass-through props for the underlying input
+     * @returns {Object} A props object to be spread onto the input
+     */
+    getOptionalProps() {
+        return Object.keys(this.props).reduce((props, propName) => {
+            if (PROPS_TO_EXCLUDE.indexOf(propName) === -1) {
+                return {
+                    ...props,
+                    [propName]: this.props[propName]
+                };
+            }
+            return props;
+        }, {});
+    }
+
+    /**
      * Handle value changes
      * @param {Object} event An input change event
      */
@@ -77,7 +95,7 @@ export default class FormattedInput extends Component {
         return (
             <Element
                 type={this.inputType}
-                {...this.props}
+                {...this.getOptionalProps()}
                 value={this.state.formattedValue}
                 onChange={e => this.onValueChange(e)}
             />
