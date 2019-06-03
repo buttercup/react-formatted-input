@@ -8,27 +8,21 @@ const NOOP = () => {};
 
 export const Presets = PatternPresets;
 
+const PROPS_TO_EXCLUDE = ["element", "value", "onChange"];
+
 export default class FormattedInput extends Component {
     static propTypes = {
-        className: PropTypes.string,
         element: PropTypes.elementType.isRequired,
         format: PropTypes.arrayOf(PropTypes.object).isRequired,
-        name: PropTypes.string,
         onChange: PropTypes.func.isRequired,
-        onBlur: PropTypes.func,
-        placeholder: PropTypes.string.isRequired,
         type: PropTypes.string.isRequired,
         value: PropTypes.string.isRequired
     };
 
     static defaultProps = {
-        className: "",
         element: "input",
         format: [],
-        name: "",
         onChange: NOOP,
-        onBlur: NOOP,
-        placeholder: "",
         type: "text",
         value: ""
     };
@@ -72,8 +66,8 @@ export default class FormattedInput extends Component {
      * @returns {Object} A props object to be spread onto the input
      */
     getOptionalProps() {
-        return ["name", "placeholder", "className"].reduce((props, propName) => {
-            if (this.props[propName].length > 0) {
+        return Object.keys(this.props).reduce((props, propName) => {
+            if (PROPS_TO_EXCLUDE.indexOf(propName) === -1) {
                 return {
                     ...props,
                     [propName]: this.props[propName]
@@ -97,14 +91,13 @@ export default class FormattedInput extends Component {
     }
 
     render() {
-        const { element: Element, onBlur } = this.props;
+        const { element: Element } = this.props;
         return (
             <Element
                 type={this.inputType}
                 {...this.getOptionalProps()}
                 value={this.state.formattedValue}
                 onChange={e => this.onValueChange(e)}
-                onBlur={e => onBlur(e) || null}
             />
         );
     }
