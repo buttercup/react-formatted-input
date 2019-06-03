@@ -161,3 +161,8 @@ test("updates props correctly", function() {
     input.update(<FormattedInput value="" />);
     expect(input.toTree().rendered.props.value).toEqual("");
 });
+
+test("passes id as external prop", function() {
+    const input = TestRenderer.create(<FormattedInput value="test" id="test123" />);
+    expect(input.toTree().rendered.props.id).toEqual("test123");
+});
