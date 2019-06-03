@@ -1,5 +1,10 @@
 # react-formatted-input changelog
 
+## v1.2.0
+_2019-06-03_
+
+ * Props passed to nested `<input>` element
+
 ## v1.1.0
 _2019-04-27_
 
