@@ -53,9 +53,7 @@ export function formatValue(value, formatSpec = []) {
             } else if (typeof pattern.exactly === "string") {
                 if (pattern.exactly.length !== 1) {
                     throw new Error(
-                        `Unable to format value: 'exactly' value should be of length 1: ${
-                            pattern.exactly
-                        }`
+                        `Unable to format value: 'exactly' value should be of length 1: ${pattern.exactly}`
                     );
                 }
                 formattedValue += pattern.exactly;
