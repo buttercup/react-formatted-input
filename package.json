@@ -1,6 +1,6 @@
 {
   "name": "@buttercup/react-formatted-input",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "An input component that abides by configurable formatting and constraint rules",
   "main": "dist/index.js",
   "files": [
