@@ -41,8 +41,19 @@ export function formatValue(value, formatSpec = []) {
             rawValue = "";
         while (format.length > 0 && characters.length > 0) {
             const pattern = format.shift();
-            if (typeof pattern.char === "object") {
-                while (characters.length > 0 && pattern.char.test(characters[0]) !== true) {
+            if (pattern.char) {
+                let charRexp;
+                if (typeof pattern.char === "object" && typeof pattern.char.test === "function") {
+                    charRexp = pattern.char;
+                } else if (Array.isArray(pattern.char) && pattern.char.length >= 1) {
+                    const [rexp, mod = ""] = pattern.char;
+                    charRexp = new RegExp(rexp, mod);
+                } else if (typeof pattern.char === "string") {
+                    charRexp = new RegExp(pattern.char);
+                } else {
+                    throw new Error(`Invalid pattern provided: ${pattern.char}`);
+                }
+                while (characters.length > 0 && charRexp.test(characters[0]) !== true) {
                     characters.shift();
                 }
                 if (characters.length > 0) {
@@ -53,9 +64,7 @@ export function formatValue(value, formatSpec = []) {
             } else if (typeof pattern.exactly === "string") {
                 if (pattern.exactly.length !== 1) {
                     throw new Error(
-                        `Unable to format value: 'exactly' value should be of length 1: ${
-                            pattern.exactly
-                        }`
+                        `Unable to format value: 'exactly' value should be of length 1: ${pattern.exactly}`
                     );
                 }
                 formattedValue += pattern.exactly;
