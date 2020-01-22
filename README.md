@@ -1,9 +1,10 @@
 # react-formatted-input
-An input component that abides by configurable formatting and constraint rules
+> An input component that abides by configurable formatting and constraint rules
 
 [![Build Status](https://travis-ci.org/buttercup/react-formatted-input.svg?branch=master)](https://travis-ci.org/buttercup/react-formatted-input) [![npm package](https://img.shields.io/badge/%40buttercup%2Freact--formatted--input-npm-red.svg)](https://www.npmjs.com/package/@buttercup/react-formatted-input)
 
 ## About
+
 `FormattedInput` takes a value and ensures that user input conforms to some specified rules. Formatted input instances can have their length limited, as well as having a _pattern_ enforced for their entry. As the user types, changes to the value are forced through the provided pattern and any sections that are invalid are simply stripped. What is returned from the component is a pattern-matched string.
 
 This is useful for custom inputs that are designed to take values of a certain type, often mapping to real world information like credit card details or dates.
@@ -13,9 +14,11 @@ This is useful for custom inputs that are designed to take values of a certain t
 </p>
 
 ## Installation
+
 To install, simply run `npm install @buttercup/react-formatted-input --save` or `yarn add @buttercup/react-formatted-input`.
 
 ## Usage
+
 Import the `FormattedInput` class and just drop it in:
 
 ```javascript
@@ -94,7 +97,20 @@ const { formatted, raw } = format("2025550199", USPhoneNumberFormat);
 // raw = 2025550199
 ```
 
+### Regular expression alternatives
+
+As Regular Expression instances don't serialise, it's possible to use a string or array to describe the pattern:
+
+```javascript
+const format1 = [{ char: "\\w", repeat: 5 }];
+
+const format2 = [{ char: ["[a-f0-9]", "i"], repeat: 5 }];
+```
+
+_The second value in the array is the flag string for the `RegExp` constructor._
+
 ### Presets
+
 Some presets are available in the `source/presets.js` file that might be used like so:
 
 ```javascript
