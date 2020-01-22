@@ -1,5 +1,10 @@
 # react-formatted-input changelog
 
+## v1.3.0
+_2020-01-22_
+
+ * String and array format support for character pattern
+
 ## v1.2.0
 _2019-06-03_
 
