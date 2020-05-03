@@ -96,7 +96,7 @@ export default class FormattedInput extends Component {
         return (
             <Element
                 type={this.inputType}
-                ref={getOptionalProps().inputref}
+                ref={this.getOptionalProps().inputref}
                 {...this.getOptionalProps()}
                 value={this.state.formattedValue}
                 onChange={e => this.onValueChange(e)}
