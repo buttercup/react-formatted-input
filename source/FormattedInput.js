@@ -16,7 +16,8 @@ export default class FormattedInput extends Component {
         format: PropTypes.arrayOf(PropTypes.object).isRequired,
         onChange: PropTypes.func.isRequired,
         type: PropTypes.string.isRequired,
-        value: PropTypes.string.isRequired
+        value: PropTypes.string.isRequired,
+        inputref: PropTypes.any
     };
 
     static defaultProps = {
@@ -95,6 +96,7 @@ export default class FormattedInput extends Component {
         return (
             <Element
                 type={this.inputType}
+                ref={this.getOptionalProps().inputref}
                 {...this.getOptionalProps()}
                 value={this.state.formattedValue}
                 onChange={e => this.onValueChange(e)}
