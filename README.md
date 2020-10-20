@@ -17,6 +17,10 @@ This is useful for custom inputs that are designed to take values of a certain t
 
 To install, simply run `npm install @buttercup/react-formatted-input --save` or `yarn add @buttercup/react-formatted-input`.
 
+### Development
+
+You can run the Storybook to test the component in your browser, by executing `npm run storybook`.
+
 ## Usage
 
 Import the `FormattedInput` class and just drop it in:

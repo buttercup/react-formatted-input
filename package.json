@@ -8,8 +8,10 @@
   ],
   "scripts": {
     "build": "babel source --out-dir dist",
+    "build-storybook": "build-storybook",
     "format": "prettier --write '{source,test}/**/*.js'",
     "prepublish": "npm run build",
+    "storybook": "start-storybook -p 6006",
     "test": "npm run test:specs && npm run test:format",
     "test:format": "prettier-check '{source,test}/**/*.js'",
     "test:specs": "jest"
@@ -52,7 +54,12 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.12.1",
     "@babel/preset-env": "^7.12.1",
     "@babel/preset-react": "^7.12.1",
+    "@storybook/addon-actions": "^6.0.26",
+    "@storybook/addon-essentials": "^6.0.26",
+    "@storybook/addon-links": "^6.0.26",
+    "@storybook/react": "^6.0.26",
     "babel-jest": "^26.6.0",
+    "babel-loader": "^8.1.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.5",
     "husky": "^4.3.0",
@@ -63,6 +70,7 @@
     "prettier-check": "^2.0.0",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
+    "react-is": "^16.13.1",
     "react-json-renderer": "^0.6.0",
     "react-test-renderer": "^16.14.0"
   },
