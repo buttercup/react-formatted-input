@@ -1,4 +1,7 @@
 language: node_js
-script: npm run test
+install:
+  - npm ci
+script:
+  - npm test
 node_js:
   - "stable"
