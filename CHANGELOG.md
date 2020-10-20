@@ -1,5 +1,10 @@
 # react-formatted-input changelog
 
+## v1.4.0
+_2020-10-20_
+
+ * [#18](https://github.com/buttercup/react-formatted-input/issues/18) `ref` support via `inputref` parameter for referencing the input
+
 ## v1.3.0
 _2020-01-22_
 
